@@ -1,0 +1,46 @@
+{
+  "suite": "contract-verified-dev-crew-eval",
+  "version": "1.0.0",
+  "cases": [
+    {
+      "id": "eval_01_valid_contract_pass",
+      "description": "Valid backend and frontend artifacts matching interface contract and passing acceptance tests",
+      "expected_verdict": "PASS",
+      "expected_checks": {
+        "sandbox_isolated": true,
+        "path_traversal_blocked": false,
+        "contract_matched": true,
+        "acceptance_passed": true
+      }
+    },
+    {
+      "id": "eval_02_path_traversal_blocked",
+      "description": "Artifact path attempting directory escape (../escape.py) is rejected by sandbox path-traversal guard",
+      "expected_verdict": "FAIL",
+      "expected_error": "SandboxPathError"
+    },
+    {
+      "id": "eval_03_backend_defect_detected",
+      "description": "Backend implementation has logic defect caught by independent human-authored acceptance tests",
+      "expected_verdict": "FAIL",
+      "expected_checks": {
+        "contract_matched": true,
+        "acceptance_passed": false
+      }
+    },
+    {
+      "id": "eval_04_missing_executable_artifact",
+      "description": "LLM summary reports completion but required executable artifact is missing on disk",
+      "expected_verdict": "FAIL",
+      "expected_error": "MissingArtifactError"
+    },
+    {
+      "id": "eval_05_contract_signature_mismatch",
+      "description": "Frontend call signature diverges from backend InterfaceContract definition",
+      "expected_verdict": "FAIL",
+      "expected_checks": {
+        "contract_matched": false
+      }
+    }
+  ]
+}
